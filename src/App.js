@@ -1,63 +1,78 @@
 import { useEffect, useState } from 'react';
-import './App.css';
+import ClipLoader from 'react-spinners/ClipLoader';
+import Map from './components/Map';
+import SearchBox from './components/SearchBox';
+import TemperatureWidget from './components/TemperatureWidget';
+import { WeatherContext } from './context/WeatherContext';
+import { Wrapper, Status } from '@googlemaps/react-wrapper';
+import NavBar from './components/NavBar';
+import Clock from './components/Clock';
+import NewsList from './components/NewsList';
 
 function App() {
-  const [input, setInput] = useState('');
-  const [weatherData, setWeatherData] = useState();
-  const [loading, setLoading] = useState(false);
-  const city_url = `https://weather-site-proxy-server.herokuapp.com/api/city?q=${input}`;
-  const city_url2 = `http://localhost:5000/api/city?q=${input}`;
-
-  const getWeatherdata = () => {
-    fetch(city_url2)
-      .then((res) => res.json())
-      .then((data) => setWeatherData(data))
-      .then(setLoading(false));
-  };
+  const [location, setLocation] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      let lat = position.coords.latitude;
-      let lon = position.coords.longitude;
-      console.log(lat, lon);
-      const long_lat_url = `https://weather-site-proxy-server.herokuapp.com/api/coords?lat=${lat}&lon=${lon}`;
-      const long_lat_url2 = `http://localhost:5000/api/coords?lat=${lat}&lon=${lon}`;
-      fetch(long_lat_url2)
-        .then((res) => res.json())
-        .then((data) => setWeatherData(data))
-        .then(setLoading(false));
-    });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude;
+        const long_lat_url = `https://weather-site-proxy-server.herokuapp.com/api/coords?lat=${lat}&lon=${lon}`;
+        fetch(long_lat_url)
+          .then((res) => res.json())
+          .then((data) => setLocation(data));
+      });
+    } else {
+      console.log('Geolocation not available');
+    }
   }, []);
 
-  if (loading) {
-    return <div className='App'>Loading...</div>;
-  } else {
-    return (
-      <div className='App'>
-        Weather site
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setLoading(true);
-            getWeatherdata();
+  // const render = (status) => {
+  //   if (status === Status.FAILURE) return <ErrorComponent />;
+  //   return <Spinner />;
+  // };
+  return (
+    <WeatherContext.Provider
+      value={{
+        locationValue: [location, setLocation],
+        loadingValue: [loading, setLoading],
+      }}
+    >
+      <NavBar />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          paddingLeft: 50,
+          paddingRight: 50,
+        }}
+      >
+        <div>
+          <SearchBox />
+
+          <TemperatureWidget />
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            flexDirection: 'column',
           }}
         >
-          <input
-            type='text'
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          ></input>
-          <input type='submit' value='Submit'></input>
-        </form>
-        {/* <button onClick={() => getWeatherdata()}>click</button> */}
-        <div>
-          {/* {weatherData ? console.log(weatherData) : null} */}
-          <h1>{weatherData?.name}</h1>
-          <h1>Temperatur: {weatherData?.main?.temp} °C</h1>
+          {/* <Wrapper
+            apiKey={'AIzaSyBkr0g2XCQrYTmcJxNbE0rsykanZdvohNQ'}
+            // render={render}
+          >
+            <Map />
+          </Wrapper> */}
+          <Clock />
+          <NewsList />
         </div>
       </div>
-    );
-  }
+    </WeatherContext.Provider>
+  );
 }
 
 export default App;
