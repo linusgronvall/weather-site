@@ -8,6 +8,7 @@ const NewsList = () => {
     'https://newsapi.org/v2/top-headlines?' +
     'country=se&' +
     'apiKey=e0e91470dcc64a59bdd0c36ed17c41bf';
+
   useEffect(() => {
     const req = new Request(url);
     setLoading(true);
@@ -21,11 +22,12 @@ const NewsList = () => {
     <div
       style={{
         marginTop: 20,
+        marginLeft: 50,
         background: 'white',
         width: 500,
         overflowX: 'hidden',
         overflowY: 'auto',
-        height: '78vh',
+        height: '80vh',
         padding: 15,
         display: 'flex',
         flexDirection: 'column',
@@ -49,11 +51,36 @@ const NewsList = () => {
       ) : (
         <div>
           {news?.map((article) => (
-            <div style={{ marginBottom: 15 }}>
-              <h3>{article.title}</h3>
+            <div
+              style={{
+                marginBottom: 15,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+              }}
+            >
+              <h3>{article?.title}</h3>
               <p>{article?.description}</p>
-              <p>
-                <a href={article.url}></a>
+              <p
+                style={{ marginTop: 6 }}
+                onMouseOver={(e) => {
+                  e.target.style.color = 'rgb(70, 70, 70)';
+                  e.target.style.transition = '0.3s';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.color = 'black';
+                }}
+              >
+                <a
+                  href={article?.url}
+                  target='_blank'
+                  style={{
+                    textDecoration: 'underline',
+                    color: 'black',
+                  }}
+                >
+                  Läs hela artikeln
+                </a>
               </p>
             </div>
           ))}

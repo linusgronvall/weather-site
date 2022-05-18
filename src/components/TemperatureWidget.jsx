@@ -21,7 +21,7 @@ const TemperatureWidget = () => {
     <div
       style={{
         background: 'white',
-        width: 300,
+        width: 250,
         height: 150,
         padding: 15,
         display: 'flex',
@@ -45,10 +45,8 @@ const TemperatureWidget = () => {
         </div>
       ) : (
         <div>
-          {/* {location?.name ? ( */}
           <div>
             <h2>
-              {console.log(location)}
               {location?.name}, {location?.sys?.country}
             </h2>
             <Comp />

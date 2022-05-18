@@ -14,7 +14,7 @@ const NavBar = () => {
         paddingLeft: 50,
       }}
     >
-      <h1>Weather</h1>
+      <h1>Weather Site</h1>
     </div>
   );
 };

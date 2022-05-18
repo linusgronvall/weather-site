@@ -28,10 +28,6 @@ function App() {
     }
   }, []);
 
-  // const render = (status) => {
-  //   if (status === Status.FAILURE) return <ErrorComponent />;
-  //   return <Spinner />;
-  // };
   return (
     <WeatherContext.Provider
       value={{
@@ -42,17 +38,49 @@ function App() {
       <NavBar />
       <div
         style={{
+          height: '90vh',
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
           paddingLeft: 50,
           paddingRight: 50,
+          paddingBottom: 10,
         }}
       >
-        <div>
+        <div style={{ width: '60%' }}>
           <SearchBox />
-
-          <TemperatureWidget />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <TemperatureWidget />
+            <TemperatureWidget />
+            <TemperatureWidget />
+          </div>
+          {loading ? (
+            <div
+              style={{
+                height: '60vh',
+                width: '100%',
+                backgroundColor: 'white',
+                boxShadow: '0px 0px 10px 1px #e0e0e0',
+                borderRadius: 10,
+                marginTop: 20,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <ClipLoader color={'grey'} loading={loading} size={25} />
+            </div>
+          ) : (
+            <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+              <Map />
+            </Wrapper>
+          )}
         </div>
         <div
           style={{
@@ -61,12 +89,6 @@ function App() {
             flexDirection: 'column',
           }}
         >
-          {/* <Wrapper
-            apiKey={'AIzaSyBkr0g2XCQrYTmcJxNbE0rsykanZdvohNQ'}
-            // render={render}
-          >
-            <Map />
-          </Wrapper> */}
           <Clock />
           <NewsList />
         </div>
