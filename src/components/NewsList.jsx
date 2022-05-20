@@ -28,7 +28,9 @@ const NewsList = () => {
         overflowX: 'hidden',
         overflowY: 'auto',
         height: '80vh',
-        padding: 15,
+        paddingRight: 15,
+        paddingLeft: 15,
+        paddingTop: 10,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
@@ -50,6 +52,7 @@ const NewsList = () => {
         </div>
       ) : (
         <div>
+          <h2 style={{ marginBottom: 5 }}>Nyheter, {}</h2>
           {news?.map((article) => (
             <div
               style={{

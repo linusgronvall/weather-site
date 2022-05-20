@@ -8,6 +8,7 @@ import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import NavBar from './components/NavBar';
 import Clock from './components/Clock';
 import NewsList from './components/NewsList';
+import ForecastWidget from './components/ForecastWidget';
 
 function App() {
   const [location, setLocation] = useState();
@@ -57,8 +58,7 @@ function App() {
             }}
           >
             <TemperatureWidget />
-            <TemperatureWidget />
-            <TemperatureWidget />
+            <ForecastWidget />
           </div>
           {loading ? (
             <div

@@ -17,19 +17,20 @@ const TemperatureWidget = () => {
     }
     setLoading(false);
   }, []);
+
   return (
     <div
       style={{
         background: 'white',
         width: 250,
         height: 150,
-        padding: 15,
+        padding: 12,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        justifyContent: 'center',
         borderRadius: 15,
         boxShadow: '0px 0px 10px 1px #e0e0e0',
+        marginRight: 20,
       }}
     >
       {loading ? (

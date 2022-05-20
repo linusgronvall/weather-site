@@ -29,13 +29,13 @@ const Clock = () => {
         }}
       >
         <p style={{ fontSize: 25, marginRight: 5 }}>
-          {dateState.toLocaleDateString('en-GB', {
+          {dateState.toLocaleDateString('se-SE', {
             weekday: 'long',
           })}
           ,
         </p>
         <p>
-          {dateState.toLocaleDateString('en-GB', {
+          {dateState.toLocaleDateString('se-SE', {
             day: 'numeric',
             month: 'short',
             year: 'numeric',
