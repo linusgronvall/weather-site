@@ -1,6 +1,25 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { WeatherContext } from '../context/WeatherContext';
 
 const ForecastWidget = () => {
+  const { locationValue, forecastValue, loadingValue } =
+    useContext(WeatherContext);
+  const [location, setLocation] = locationValue;
+  const [forecast, setForecast] = forecastValue;
+  const [loading, setLoading] = loadingValue;
+  let forecastArray = [];
+  function getEveryNth(arr, nth) {
+    for (let i = 4; i < arr.length; i += nth) {
+      forecastArray = [...forecastArray, arr[i]];
+    }
+  }
+
+  getEveryNth(forecast, 8);
+
+  function formatDate(unix_timestamp) {
+    return new Date(unix_timestamp);
+  }
+
   return (
     <div
       className='forecastContainer'
@@ -24,15 +43,18 @@ const ForecastWidget = () => {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          // backgroundColor: 'red',
           height: '100%',
         }}
       >
-        <div className='forecastDayContainer'>Dag 1</div>
-        <div className='forecastDayContainer'>Dag 1</div>
-        <div className='forecastDayContainer'>Dag 1</div>
-        <div className='forecastDayContainer'>Dag 1</div>
-        <div className='forecastDayContainer'>Dag 1</div>
+        {console.log(forecastArray)}
+        {forecastArray?.map((day) => {
+          return (
+            <div key={day?.dt} className='forecastDayContainer'>
+              <p>{console.log(formatDate(day?.dt))}</p>
+              <p>{day?.main?.temp}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

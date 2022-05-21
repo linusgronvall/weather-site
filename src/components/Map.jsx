@@ -13,7 +13,7 @@ function Map() {
       center: { lat: location?.coord?.lat, lng: location?.coord?.lon },
       zoom: 12,
     });
-  });
+  }, [location]);
 
   return (
     <div

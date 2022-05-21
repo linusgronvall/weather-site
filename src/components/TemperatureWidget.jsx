@@ -8,16 +8,6 @@ const TemperatureWidget = () => {
   const [location, setLocation] = locationValue;
   const [loading, setLoading] = loadingValue;
 
-  useEffect(() => {
-    const city_url = `https://weather-site-proxy-server.herokuapp.com/api/city?q=Stockholm`;
-    if (!location) {
-      fetch(city_url)
-        .then((res) => res.json())
-        .then((data) => setLocation(data));
-    }
-    setLoading(false);
-  }, []);
-
   return (
     <div
       className='temperatureContainer'

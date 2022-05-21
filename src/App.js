@@ -14,22 +14,34 @@ const axios = require('axios');
 
 function App() {
   const [location, setLocation] = useState();
+  const [forecast, setForecast] = useState([]);
   const [loading, setLoading] = useState(true);
   const { height, width } = useWindowDimensions();
 
   useEffect(() => {
+    setLoading(true);
     async function getData() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-          let lat = position.coords.latitude;
-          let lon = position.coords.longitude;
-          const currentWeatherUrl = `https://weather-site-proxy-server.herokuapp.com/api/current/coords?lat=${lat}&lon=${lon}`;
-          const res = await axios.get(currentWeatherUrl);
-          setLocation(res.data);
-        });
-      } else {
-        console.log('Geolocation not available');
+      if (!location) {
+        const weatherPlaceHolder = `https://weather-site-proxy-server.herokuapp.com/api/current/city?q=Stockholm`;
+        const res = await axios.get(weatherPlaceHolder);
+        setLocation(res.data);
+        setLoading(false);
+        const forecastWeatherUrl = `https://weather-site-proxy-server.herokuapp.com/api/forecast/city?q=Stockholm`;
+        const forecastRes = await axios.get(forecastWeatherUrl);
+        setForecast([...forecastRes.data.list]);
       }
+
+      // if (navigator.geolocation) {
+      //   navigator.geolocation.getCurrentPosition(async (position) => {
+      //     let lat = position.coords.latitude;
+      //     let lon = position.coords.longitude;
+      //     const currentWeatherUrl = `https://weather-site-proxy-server.herokuapp.com/api/current/coords?lat=${lat}&lon=${lon}`;
+      //     const weatherRes = await axios.get(currentWeatherUrl);
+      //     setLocation(weatherRes.data);
+      //   });
+      // } else {
+      //   console.log('Geolocation not available');
+      // }
     }
     getData();
   }, []);
@@ -38,6 +50,7 @@ function App() {
     <WeatherContext.Provider
       value={{
         locationValue: [location, setLocation],
+        forecastValue: [forecast, setForecast],
         loadingValue: [loading, setLoading],
       }}
     >

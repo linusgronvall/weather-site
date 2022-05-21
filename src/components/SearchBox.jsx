@@ -1,20 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { WeatherContext } from '../context/WeatherContext';
 import { AiOutlineSearch } from 'react-icons/ai';
+const axios = require('axios');
 
 const SearchBox = () => {
   const [input, setInput] = useState('');
   const { locationValue, loadingValue } = useContext(WeatherContext);
   const [location, setLocation] = locationValue;
   const [loading, setLoading] = loadingValue;
-  const city_url = `https://weather-site-proxy-server.herokuapp.com/api/city?q=${input}`;
+  const getWeatherUrl = `https://weather-site-proxy-server.herokuapp.com/api/current/city?q=${input}`;
 
   const getWeatherdata = async () => {
     setLoading(true);
     setInput('');
-    await fetch(city_url)
-      .then((res) => res.json())
-      .then((data) => setLocation(data));
+    const res = await axios.get(getWeatherUrl);
+    setLocation(res.data);
     setLoading(false);
   };
   return (
