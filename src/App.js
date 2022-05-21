@@ -9,10 +9,12 @@ import NavBar from './components/NavBar';
 import Clock from './components/Clock';
 import NewsList from './components/NewsList';
 import ForecastWidget from './components/ForecastWidget';
+import useWindowDimensions from './hooks/UseWindowDimensions';
 
 function App() {
   const [location, setLocation] = useState();
   const [loading, setLoading] = useState(true);
+  const { height, width } = useWindowDimensions();
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -41,23 +43,36 @@ function App() {
         style={{
           height: '90vh',
           display: 'flex',
-          flexDirection: 'row',
           justifyContent: 'space-between',
-          paddingLeft: 50,
-          paddingRight: 50,
-          paddingBottom: 10,
         }}
+        className='homeWrapper'
       >
-        <div style={{ width: '60%' }}>
+        <div
+          className='leftContainer'
+          style={{
+            display: 'flex',
+            flexShrink: 0,
+            flexGrow: 1,
+            flexDirection: 'column',
+          }}
+        >
           <SearchBox />
           <div
+            className='weatherContainer'
             style={{
               display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              width: '100%',
+              flexShrink: 0,
             }}
           >
-            <TemperatureWidget />
+            {width > 690 ? (
+              <TemperatureWidget />
+            ) : (
+              <div className='weatherContainerInner'>
+                <TemperatureWidget />
+                <Clock />
+              </div>
+            )}
             <ForecastWidget />
           </div>
           {loading ? (
@@ -68,7 +83,6 @@ function App() {
                 backgroundColor: 'white',
                 boxShadow: '0px 0px 10px 1px #e0e0e0',
                 borderRadius: 10,
-                marginTop: 20,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -83,13 +97,14 @@ function App() {
           )}
         </div>
         <div
+          className='rightContainer'
           style={{
             display: 'flex',
             alignItems: 'flex-end',
             flexDirection: 'column',
           }}
         >
-          <Clock />
+          {width < 690 ? null : <Clock />}
           <NewsList />
         </div>
       </div>

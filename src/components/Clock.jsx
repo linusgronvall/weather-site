@@ -8,26 +8,17 @@ const Clock = () => {
   }, []);
   return (
     <div
+      className='clockContainer'
       style={{
         background: 'white',
-        width: 500,
-        height: 80,
         padding: 15,
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
         borderRadius: 15,
         boxShadow: '0px 0px 10px 1px #e0e0e0',
       }}
     >
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'flex-end',
-        }}
-      >
+      <div className='clockInnerContainer'>
         <p style={{ fontSize: 25, marginRight: 5 }}>
           {dateState.toLocaleDateString('se-SE', {
             weekday: 'long',
@@ -44,7 +35,7 @@ const Clock = () => {
       </div>
 
       <p>
-        {dateState.toLocaleString('en-US', {
+        {dateState.toLocaleString('se-SE', {
           hour: 'numeric',
           minute: 'numeric',
           second: '2-digit',

@@ -3,9 +3,11 @@ import React from 'react';
 const ForecastWidget = () => {
   return (
     <div
+      className='forecastContainer'
       style={{
         background: 'white',
-        width: '90%',
+        flexShrink: 0,
+        flexGrow: 1,
         height: 150,
         padding: 12,
         display: 'flex',
@@ -22,15 +24,15 @@ const ForecastWidget = () => {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          backgroundColor: 'red',
+          // backgroundColor: 'red',
           height: '100%',
         }}
       >
-        <div>Dag 1</div>
-        <div>Dag 2</div>
-        <div>Dag 3</div>
-        <div>Dag 4</div>
-        <div>Dag 5</div>
+        <div className='forecastDayContainer'>Dag 1</div>
+        <div className='forecastDayContainer'>Dag 1</div>
+        <div className='forecastDayContainer'>Dag 1</div>
+        <div className='forecastDayContainer'>Dag 1</div>
+        <div className='forecastDayContainer'>Dag 1</div>
       </div>
     </div>
   );

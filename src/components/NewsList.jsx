@@ -20,11 +20,10 @@ const NewsList = () => {
 
   return (
     <div
+      className='newsListContainer'
       style={{
-        marginTop: 20,
-        marginLeft: 50,
         background: 'white',
-        width: 500,
+        width: '100%',
         overflowX: 'hidden',
         overflowY: 'auto',
         height: '80vh',
@@ -52,7 +51,7 @@ const NewsList = () => {
         </div>
       ) : (
         <div>
-          <h2 style={{ marginBottom: 5 }}>Nyheter, {}</h2>
+          <h2 style={{ marginBottom: 5 }}>Nyheter</h2>
           {news?.map((article) => (
             <div
               style={{

@@ -23,14 +23,13 @@ const SearchBox = () => {
         e.preventDefault();
         getWeatherdata();
       }}
+      className='searchContainer'
       style={{
-        width: 300,
         height: 35,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        marginBottom: 20,
         boxShadow: '0px 0px 10px 1px #e0e0e0',
         borderRadius: 10,
       }}

@@ -4,6 +4,7 @@ import Clock from './Clock';
 const NavBar = () => {
   return (
     <div
+      className='navWrapper'
       style={{
         width: '100%',
         height: '7vh',
@@ -11,7 +12,6 @@ const NavBar = () => {
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 10,
-        paddingLeft: 50,
       }}
     >
       <h1>Weather Site</h1>

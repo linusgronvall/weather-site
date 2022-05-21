@@ -20,11 +20,14 @@ function Map() {
     <div
       ref={ref}
       style={{
+        display: 'flex',
         height: '60vh',
         width: '100%',
+        minWidth: '100%',
+        flexShrink: 0,
+        flexGrow: 1,
         boxShadow: '0px 0px 10px 1px #e0e0e0',
         borderRadius: 10,
-        marginTop: 20,
       }}
       id='map'
     />

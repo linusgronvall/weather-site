@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { WeatherContext } from '../context/WeatherContext';
 import ClipLoader from 'react-spinners/ClipLoader';
-import Comp from './Comp';
+// import Comp from './Comp';
 
 const TemperatureWidget = () => {
   const { locationValue, loadingValue } = useContext(WeatherContext);
@@ -20,17 +20,15 @@ const TemperatureWidget = () => {
 
   return (
     <div
+      className='temperatureContainer'
       style={{
         background: 'white',
-        width: 250,
-        height: 150,
         padding: 12,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
         borderRadius: 15,
         boxShadow: '0px 0px 10px 1px #e0e0e0',
-        marginRight: 20,
       }}
     >
       {loading ? (
@@ -45,16 +43,24 @@ const TemperatureWidget = () => {
           <ClipLoader color={'grey'} loading={loading} size={25} />
         </div>
       ) : (
-        <div>
-          <div>
-            <h2>
-              {location?.name}, {location?.sys?.country}
-            </h2>
-            <Comp />
+        <div style={{ width: '100%', backgroundColor: 'yellow' }}>
+          <h2>
+            {location?.name}, {location?.sys?.country}
+          </h2>
+          <div className='temperatureContainerInner'>
+            <div>
+              <p style={{ fontSize: 10 }}>
+                Temperatur: {location?.main?.temp} °C
+              </p>
+              <p> Vind: {location?.wind?.speed} m/s</p>
+            </div>
+            <div style={{ backgroundColor: 'red' }}>
+              <img
+                src={`http://openweathermap.org/img/wn/${location?.weather[0]?.icon}@2x.png`}
+                style={{ width: 45, height: 45 }}
+              />
+            </div>
           </div>
-          {/* ) : (
-            <h4>404 Error. Location not found</h4>
-          )} */}
         </div>
       )}
     </div>
