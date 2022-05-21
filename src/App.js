@@ -10,6 +10,7 @@ import Clock from './components/Clock';
 import NewsList from './components/NewsList';
 import ForecastWidget from './components/ForecastWidget';
 import useWindowDimensions from './hooks/UseWindowDimensions';
+const axios = require('axios');
 
 function App() {
   const [location, setLocation] = useState();
@@ -17,18 +18,20 @@ function App() {
   const { height, width } = useWindowDimensions();
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        let lat = position.coords.latitude;
-        let lon = position.coords.longitude;
-        const long_lat_url = `https://weather-site-proxy-server.herokuapp.com/api/coords?lat=${lat}&lon=${lon}`;
-        fetch(long_lat_url)
-          .then((res) => res.json())
-          .then((data) => setLocation(data));
-      });
-    } else {
-      console.log('Geolocation not available');
+    async function getData() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          let lat = position.coords.latitude;
+          let lon = position.coords.longitude;
+          const currentWeatherUrl = `https://weather-site-proxy-server.herokuapp.com/api/current/coords?lat=${lat}&lon=${lon}`;
+          const res = await axios.get(currentWeatherUrl);
+          setLocation(res.data);
+        });
+      } else {
+        console.log('Geolocation not available');
+      }
     }
+    getData();
   }, []);
 
   return (

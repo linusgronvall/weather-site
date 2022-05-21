@@ -54,6 +54,7 @@ const NewsList = () => {
           <h2 style={{ marginBottom: 5 }}>Nyheter</h2>
           {news?.map((article) => (
             <div
+              key={article.title}
               style={{
                 marginBottom: 15,
                 display: 'flex',

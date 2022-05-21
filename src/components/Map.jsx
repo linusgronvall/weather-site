@@ -7,7 +7,6 @@ function Map() {
   const { locationValue, loadingValue } = useContext(WeatherContext);
   const [location, setLocation] = locationValue;
   const [loading, setLoading] = loadingValue;
-  console.log(location);
 
   useEffect(() => {
     new window.google.maps.Map(ref.current, {
